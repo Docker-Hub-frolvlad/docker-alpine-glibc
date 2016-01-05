@@ -1,3 +1,7 @@
+[![Docker Stars](https://img.shields.io/docker/stars/frolvlad/alpine-glibc.svg?style=flat-square)](https://hub.docker.com/r/frolvlad/alpine-glibc/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/frolvlad/alpine-glibc.svg?style=flat-square)](https://hub.docker.com/r/frolvlad/alpine-glibc/)
+
+
 Alpine GNU C library (glibc) Docker image
 =========================================
 
