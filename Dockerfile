@@ -24,10 +24,9 @@ RUN ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases
     /usr/glibc-compat/bin/localedef --force --inputfile POSIX --charmap UTF-8 C.UTF-8 || true && \
     echo "export LANG=C.UTF-8" > /etc/profile.d/locale.sh && \
     \
-    apk del glibc-i18n && \
-    \
-    apk del build-dependencies && \
+    apk del glibc-i18n build-dependencies && \
     rm \
+        /root/.wget-hsts \
         "$ALPINE_GLIBC_BASE_PACKAGE_FILENAME" \
         "$ALPINE_GLIBC_BIN_PACKAGE_FILENAME" \
         "$ALPINE_GLIBC_I18N_PACKAGE_FILENAME"
