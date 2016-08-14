@@ -15,7 +15,7 @@ side with musl libc (default in Apline Linux). glibc packages for Alpine Linux a
 
 Total size of this image is only:
 
-[![](https://badge.imagelayers.io/frolvlad/alpine-glibc:latest.svg)](https://imagelayers.io/?images=frolvlad/alpine-glibc:latest 'Get your own badge on imagelayers.io')
+[![](https://images.microbadger.com/badges/image/frolvlad/alpine-glibc.svg)](http://microbadger.com/images/frolvlad/alpine-glibc "Get your own image badge on microbadger.com")
 
 Usage Example
 -------------
