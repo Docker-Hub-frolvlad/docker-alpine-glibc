@@ -1,4 +1,4 @@
-FROM alpine:3.4
+FROM alpine:3.5
 
 # Here we install GNU libc (aka glibc) and set C.UTF-8 locale as default.
 
