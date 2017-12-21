@@ -9,7 +9,7 @@ This image is based on Alpine Linux image, which is only a 5MB image, and contai
 proprietary projects compiled against glibc (e.g. OracleJDK, Anaconda) work on Alpine.
 
 This image includes some quirks to make [glibc](https://www.gnu.org/software/libc/) work side by
-side with musl libc (default in Apline Linux). glibc packages for Alpine Linux are prepared by
+side with musl libc (default in Alpine Linux). glibc packages for Alpine Linux are prepared by
 [Andy Shinn](https://github.com/andyshinn) and the releases are published in
 [andyshinn/alpine-pkg-glibc](https://github.com/andyshinn/alpine-pkg-glibc) github repo.
 
