@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM mcr.microsoft.com/dotnet/core/runtime:2.2-alpine
 
 ENV LANG=C.UTF-8
 
