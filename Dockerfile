@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/runtime:2.2-alpine
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-alpine
 
 ENV LANG=C.UTF-8
 
