@@ -13,6 +13,8 @@ side with musl libc (default in Alpine Linux). glibc packages for Alpine Linux a
 [Sasha Gerrand](https://github.com/sgerrand) and the releases are published in
 [sgerrand/alpine-pkg-glibc](https://github.com/sgerrand/alpine-pkg-glibc) github repo.
 
+If you need to update your libc library cache, use `/usr/glibc-compat/sbin/ldconfig` instead of the usual `/sbin/ldconfig`. You can also use the `LD_LIBRARY_PATH` as on standard libc-based distributions.
+
 Download size of this image is only:
 
 [![](https://images.microbadger.com/badges/image/frolvlad/alpine-glibc.svg)](http://microbadger.com/images/frolvlad/alpine-glibc "Get your own image badge on microbadger.com")
