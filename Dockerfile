@@ -4,7 +4,15 @@ ENV LANG=C.UTF-8
 
 # Here we install GNU libc (aka glibc) and set C.UTF-8 locale as default.
 
-RUN ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases/download" && \
+RUN ZLIB_BASE_URL="https://github.com/anigkus/packages/raw/main/zstd" && \
+    ZLIB_BASE_URL_PACKAGE_FILENAME="zlib-1_1.2.12-1-x86_64.pkg.tar.gz"  && \
+    wget "$ZLIB_BASE_URL/$ZLIB_BASE_URL_PACKAGE_FILENAME" -O "/tmp/$ZLIB_BASE_URL_PACKAGE_FILENAME" && \
+    mkdir -p /tmp/libz && \
+    mkdir -p /usr/glibc-compat/lib && \
+    tar -xf "/tmp/$ZLIB_BASE_URL_PACKAGE_FILENAME" -C /tmp/libz/ && \
+    cp /tmp/libz/usr/lib/libz.so.1.2.12 /usr/glibc-compat/lib/  && \
+    rm -rf /tmp/libz "/tmp/$ZLIB_BASE_URL_PACKAGE_FILENAME" && \
+    ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases/download" && \
     ALPINE_GLIBC_PACKAGE_VERSION="2.34-r0" && \
     ALPINE_GLIBC_BASE_PACKAGE_FILENAME="glibc-$ALPINE_GLIBC_PACKAGE_VERSION.apk" && \
     ALPINE_GLIBC_BIN_PACKAGE_FILENAME="glibc-bin-$ALPINE_GLIBC_PACKAGE_VERSION.apk" && \
