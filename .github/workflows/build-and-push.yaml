@@ -30,6 +30,6 @@ jobs:
         with:
           pull: true
           push: true
-          tags: frolvlad/alpine-glibc:latest,frolvlad/alpine-glibc:alpine-3.17_glibc-2.34,frolvlad/alpine-glibc:alpine-3.17,frolvlad/alpine-glibc:glibc-2.34
+          tags: frolvlad/alpine-glibc:latest,frolvlad/alpine-glibc:alpine-3.18_glibc-2.35,frolvlad/alpine-glibc:alpine-3.18,frolvlad/alpine-glibc:glibc-2.35
           cache-from: type=registry,ref=frolvlad/alpine-glibc:latest
           cache-to: type=inline
