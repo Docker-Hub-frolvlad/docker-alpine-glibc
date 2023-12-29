@@ -35,8 +35,6 @@ COPY ./my_app /usr/local/bin/my_app
 $ docker build -t my_app .
 ```
 
-foo
-
 There are already several images using this image, so you can refer to them as usage examples:
 
 * [`frolvlad/alpine-oraclejdk8`](https://hub.docker.com/r/frolvlad/alpine-oraclejdk8/) ([github](https://github.com/frol/docker-alpine-oraclejdk8))
