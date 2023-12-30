@@ -30,7 +30,7 @@ jobs:
         with:
           pull: true
           push: true
-          platforms: linux/amd64,linux/arm64/v8,linux/arm/v7, 
+          platforms: linux/amd64,linux/arm64/v8,linux/arm/v7,linux/arm/v6
           tags: willholtz/alpine-glibc:latest,willholtz/alpine-glibc:alpine-3.19_glibc-2.34,willholtz/alpine-glibc:alpine-3.19,willholtz/alpine-glibc:glibc-2.34
           cache-from: type=registry,ref=willholtz/alpine-glibc:latest
           cache-to: type=inline
