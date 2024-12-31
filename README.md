@@ -19,6 +19,12 @@ Download size of this image is only:
 
 [![](https://images.microbadger.com/badges/image/frolvlad/alpine-glibc.svg)](http://microbadger.com/images/frolvlad/alpine-glibc "Get your own image badge on microbadger.com")
 
+Builder
+-------------
+
+```Shell
+docker buildx build --platform linux/arm64,linux/amd64 --build-arg GLIBC_VERSION=2.39 -t alpine-glibc:2.39 .
+```
 
 Usage Example
 -------------
