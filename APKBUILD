@@ -25,7 +25,7 @@ package() {
   rm -rf "$pkgdir"/usr/glibc-compat/share
   rm -rf "$pkgdir"/usr/glibc-compat/var
 
-  # 根据架构设置符号链接
+  # set up symbolic links based on architecture
   case "$arch" in
   x86_64)
     ln -s /usr/glibc-compat/lib/ld-linux-x86_64.so.2 ${pkgdir}/lib/ld-linux-x86_64.so.2

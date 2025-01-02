@@ -47,7 +47,6 @@ RUN ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases
 # Stage 1: use docker-glibc-builder build glibc.tar.gz
 FROM ubuntu:22.04 AS builder
 LABEL maintainer="Sasha Gerrand <github+docker-glibc-builder@sgerrand.com>"
-# 支持传递 GLIBC_VERSION 参数
 ARG GLIBC_VERSION=2.39
 ENV DEBIAN_FRONTEND=noninteractive \
     GLIBC_VERSION=${GLIBC_VERSION} \
@@ -107,11 +106,11 @@ RUN case "$TARGETARCH" in \
     *)       echo "Unsupported architecture: $TARGETARCH" && exit 1 ;; \
     esac
 
-# 复制公钥和 glibc APK 包
+# use the key used during the build process
 COPY --from=packager /tmp/*.apk /tmp/
 COPY --from=packager /home/builder/.abuild/${PACKAGER}-*.pub /etc/apk/keys/
 
-# 安装 glibc APK
+# install glibc APK
 RUN apk add --no-cache gcompat && rm -rf ${LD_LINUX_PATH} && \
     apk add --no-cache --force-overwrite /tmp/glibc-${GLIBC_VERSION}-*.apk && \
     apk add --no-cache /tmp/glibc-bin-${GLIBC_VERSION}-*.apk && \
