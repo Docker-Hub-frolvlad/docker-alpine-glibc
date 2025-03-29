@@ -1,6 +1,6 @@
 #!/usr/bin/env ash
 
-set -e
+set -ex
 
 main() {
   RSA_FILE=$(ls /home/builder/.abuild/${PACKAGER}-*.rsa | head -n 1)
