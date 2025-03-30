@@ -16,9 +16,10 @@ COPY builder /builder
 ARG GLIBC_VERSION=2.41
 RUN env PREFIX_DIR=/usr/glibc-compat /builder
 
+
 # Stage 2: use docker-alpine-abuild package apk and keys
 FROM alpine:3.20 AS packager
-RUN apk --no-cache add alpine-sdk coreutils cmake sudo bash \
+RUN apk --no-cache add alpine-sdk coreutils cmake sudo \
     && adduser -G abuild -g "Alpine Package Builder" -s /bin/ash -D builder \
     && echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && mkdir /packages \
@@ -43,7 +44,8 @@ RUN case "$TARGETARCH" in \
     sed -i "s/^arch=.*$/arch=\"${TARGET_ARCH}\"/" APKBUILD && \
     abuild checksum && \
     env REPODEST=/packages abuilder -r && \
-    cp /packages/builder/${TARGET_ARCH}/*.apk /tmp/
+    mv /packages/builder/${TARGET_ARCH}/*.apk /tmp/
+
 
 # Stage 3: apk add apk, build alpine-glibc 
 FROM alpine:3.21
@@ -56,6 +58,10 @@ RUN --mount=from=packager,src=/tmp/,dst=/tmp/ \
     arm64)   export LD_LINUX_PATH="/lib/ld-linux-aarch64.so.1" ;; \
     *)       echo "Unsupported architecture: $TARGETARCH" && exit 1 ;; \
     esac && \
-    apk add --no-cache gcompat && rm ${LD_LINUX_PATH} && \
-    apk add --no-cache --force-overwrite /tmp/glibc-${GLIBC_VERSION}-*.apk && \
-    apk add --no-cache /tmp/glibc-bin-${GLIBC_VERSION}-*.apk
+    apk add --no-cache \
+        /tmp/glibc-${GLIBC_VERSION}-*.apk \
+        /tmp/glibc-bin-${GLIBC_VERSION}-*.apk \
+        /tmp/glibc-i18n-${GLIBC_VERSION}-*.apk && \
+    /usr/glibc-compat/bin/localedef --force --inputfile POSIX --charmap UTF-8 C.UTF-8 || true && \
+    echo "export LANG=C.UTF-8" > /etc/profile.d/locale.sh && \
+    apk del glibc-i18n

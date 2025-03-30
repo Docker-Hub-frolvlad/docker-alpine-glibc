@@ -12,12 +12,9 @@ main() {
     echo -e "$RSA_PRIVATE_KEY" >"/home/builder/.abuild/$RSA_PRIVATE_KEY_NAME"
     export PACKAGER_PRIVKEY="/home/builder/.abuild/$RSA_PRIVATE_KEY_NAME"
   }
-  ls -lh /home/builder/.abuild
-  echo "PACKAGE_PRIVKEY ${PACKAGER_PRIVKEY}"
   sudo chown -R builder:abuild /home/builder/package
   sudo chown -R builder:abuild $REPODEST
 
-  # exec abuild -r clean
   exec abuild "$@"
 }
 

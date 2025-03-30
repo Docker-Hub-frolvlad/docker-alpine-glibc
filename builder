@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
-[[ "$TRACE" ]] && set -x
+set -exo pipefail
 
 main() {
 	declare version="${1:-$GLIBC_VERSION}" prefix="${2:-$PREFIX_DIR}"
