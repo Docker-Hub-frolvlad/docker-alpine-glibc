@@ -6,7 +6,8 @@ on:
       - 'master'
   schedule:
     # Daily
-    - cron: '0 0 * * *'
+    - cron: '0 4 * * *'
+  workflow_dispatch:
 
 env:
   DOCKERHUB_REPO: frolvlad/alpine-glibc
@@ -18,7 +19,7 @@ jobs:
       matrix:
         include:
         - platform: linux/amd64
-          os: ubuntu-latest
+          os: ubuntu-24.04
         - platform: linux/arm64
           os: ubuntu-24.04-arm
     runs-on: ${{ matrix.os }}
