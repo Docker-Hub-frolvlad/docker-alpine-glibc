@@ -1,3 +1,11 @@
+# The majority of the configuration and commands below are inherited from:
+# - https://github.com/sgerrand/alpine-pkg-glibc
+# - https://github.com/sgerrand/docker-glibc-builder
+# - https://github.com/sgerrand/docker-alpine-abuild
+#
+# Whenever you upgrade GLIBC version, make sure to update it in ALL the stages and the .github/workflows
+# Whenever you upgrade Alpine version, make sure to update it in the stage #3 and the .github/workflows
+
 # Stage 1: use docker-glibc-builder build glibc.tar.gz
 FROM ubuntu:22.04 AS builder
 LABEL maintainer="Sasha Gerrand <github+docker-glibc-builder@sgerrand.com>"
@@ -18,6 +26,8 @@ RUN env PREFIX_DIR=/usr/glibc-compat /builder
 
 
 # Stage 2: use docker-alpine-abuild package apk and keys
+# NOTE: Alpine 3.20 image is used for packaging since the build script fails for unknown reason on the newer Alpine versions.
+#       The building Alpine version does not affect the use of the package in a newer Alpine version, so we are good for now.
 FROM alpine:3.20 AS packager
 RUN apk --no-cache add alpine-sdk coreutils cmake sudo \
     && adduser -G abuild -g "Alpine Package Builder" -s /bin/ash -D builder \
@@ -30,8 +40,8 @@ ENV PACKAGER="glibc@gliderlabs.com"
 RUN abuild-keygen -na && sudo cp /home/builder/.abuild/${PACKAGER}-*.rsa.pub /etc/apk/keys/
 
 WORKDIR /home/builder/package
-COPY --from=builder /glibc-bin.tar.gz /home/builder/package/
-COPY . /home/builder/package/
+COPY --from=builder /glibc-bin.tar.gz ./
+COPY ./APKBUILD ./abuilder ./glibc-bin.trigger ./ld.so.conf ./
 
 ARG GLIBC_VERSION=2.41
 ARG TARGETARCH
