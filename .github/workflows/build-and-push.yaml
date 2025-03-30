@@ -51,6 +51,8 @@ jobs:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           outputs: type=image,"name=${{ env.DOCKERHUB_REPO }}",push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=registry,ref=${{ env.DOCKERHUB_REPO }}:latest
+          cache-to: type=inline
 
       - name: Export digest
         run: |
