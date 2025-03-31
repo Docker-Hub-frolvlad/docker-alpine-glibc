@@ -11,9 +11,10 @@ source="./glibc-bin.tar.gz
 ld.so.conf"
 subpackages="$pkgname-bin $pkgname-dev $pkgname-i18n"
 triggers="$pkgname-bin.trigger=/lib:/usr/lib:/usr/glibc-compat/lib"
+options="lib64"
 
 package() {
-  mkdir -p "$pkgdir"/lib "$pkgdir"/usr/glibc-compat/lib/locale "$pkgdir"/usr/glibc-compat/lib64 "$pkgdir"/etc
+  mkdir -p "$pkgdir"/lib "$pkgdir"/lib64 "$pkgdir"/usr/glibc-compat/lib/locale "$pkgdir"/usr/glibc-compat/lib64 "$pkgdir"/etc
   cp -a "$srcdir"/usr "$pkgdir"
   cp "$srcdir"/ld.so.conf "$pkgdir"/usr/glibc-compat/etc/ld.so.conf
   rm "$pkgdir"/usr/glibc-compat/etc/rpc
@@ -29,10 +30,12 @@ package() {
   case "$arch" in
   x86_64)
     ln -s /usr/glibc-compat/lib/ld-linux-x86_64.so.2 "$pkgdir"/lib/ld-linux-x86_64.so.2
+    ln -s /usr/glibc-compat/lib/ld-linux-x86_64.so.2 "$pkgdir"/lib64/ld-linux-x86_64.so.2
     ln -s /usr/glibc-compat/lib/ld-linux-x86_64.so.2 "$pkgdir"/usr/glibc-compat/lib64/ld-linux-x86_64.so.2
     ;;
   aarch64)
     ln -s /usr/glibc-compat/lib/ld-linux-aarch64.so.1 "$pkgdir"/lib/ld-linux-aarch64.so.1
+    ln -s /usr/glibc-compat/lib/ld-linux-aarch64.so.1 "$pkgdir"/lib64/ld-linux-aarch64.so.1
     ln -s /usr/glibc-compat/lib/ld-linux-aarch64.so.1 "$pkgdir"/usr/glibc-compat/lib64/ld-linux-aarch64.so.1
     ;;
   *)
