@@ -29,9 +29,9 @@ package() {
   # set up symbolic links based on architecture
   case "$arch" in
   x86_64)
-    ln -s /usr/glibc-compat/lib/ld-linux-x86_64.so.2 "$pkgdir"/lib/ld-linux-x86_64.so.2
-    ln -s /usr/glibc-compat/lib/ld-linux-x86_64.so.2 "$pkgdir"/lib64/ld-linux-x86_64.so.2
-    ln -s /usr/glibc-compat/lib/ld-linux-x86_64.so.2 "$pkgdir"/usr/glibc-compat/lib64/ld-linux-x86_64.so.2
+    ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 "$pkgdir"/lib/ld-linux-x86-64.so.2
+    ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 "$pkgdir"/lib64/ld-linux-x86-64.so.2
+    ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 "$pkgdir"/usr/glibc-compat/lib64/ld-linux-x86-64.so.2
     ;;
   aarch64)
     ln -s /usr/glibc-compat/lib/ld-linux-aarch64.so.1 "$pkgdir"/lib/ld-linux-aarch64.so.1
