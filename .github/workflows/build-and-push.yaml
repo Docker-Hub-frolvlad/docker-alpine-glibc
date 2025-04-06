@@ -53,6 +53,7 @@ jobs:
         with:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
+          provenance: false
           outputs: type=image,"name=${{ env.DOCKERHUB_REPO }}",push-by-digest=true,name-canonical=true,push=true
           push: true
           cache-from: type=registry,ref=${{ env.DOCKERHUB_REPO }}:buildcache-${{ env.PLATFORM_PAIR }}
