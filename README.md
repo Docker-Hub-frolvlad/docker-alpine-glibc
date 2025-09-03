@@ -23,7 +23,7 @@ Builder
 -------------
 
 ```Shell
-docker buildx build --platform linux/arm64,linux/amd64 --build-arg GLIBC_VERSION=2.39 -t alpine-glibc:2.39 .
+docker buildx build --platform linux/arm64,linux/amd64 --build-arg GLIBC_VERSION=2.42 -t alpine-glibc:2.42 .
 ```
 
 Usage Example
@@ -45,4 +45,3 @@ There are already several images using this image, so you can refer to them as u
 
 * [`frolvlad/alpine-oraclejdk8`](https://hub.docker.com/r/frolvlad/alpine-oraclejdk8/) ([github](https://github.com/frol/docker-alpine-oraclejdk8))
 * [`frolvlad/alpine-mono`](https://hub.docker.com/r/frolvlad/alpine-mono/) ([github](https://github.com/frol/docker-alpine-mono))
-* [`denoland/deno:alpine`](https://hub.docker.com/r/denoland/deno/) ([github](https://github.com/denoland/deno_docker/blob/main/alpine.dockerfile))

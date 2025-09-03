@@ -74,12 +74,18 @@ jobs:
           retention-days: 1
 
   merge:
+    strategy:
+      matrix:
+        alpine:
+          - 3.22
+        glibc:
+          - 2.42
     runs-on: ubuntu-latest
     needs:
       - build
     steps:
       - name: Download digests
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           path: ${{ runner.temp }}/digests
           pattern: digests-*
@@ -94,16 +100,16 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Create manifest list and push
+      - name: Create manifest list and push alpine-${{ matrix.alpine }}_glibc-${{ matrix.glibc }}
         working-directory: ${{ runner.temp }}/digests
         run: |
           docker buildx imagetools create \
             -t ${{ env.DOCKERHUB_REPO }}:latest \
-            -t ${{ env.DOCKERHUB_REPO }}:glibc-2.41 \
+            -t ${{ env.DOCKERHUB_REPO }}:glibc-${{ matrix.glibc }} \
             -t ${{ env.DOCKERHUB_REPO }}:alpine-3 \
-            -t ${{ env.DOCKERHUB_REPO }}:alpine-3.21 \
-            -t ${{ env.DOCKERHUB_REPO }}:alpine-3_glibc-2.41 \
-            -t ${{ env.DOCKERHUB_REPO }}:alpine-3.21_glibc-2.41 \
+            -t ${{ env.DOCKERHUB_REPO }}:alpine-${{ matrix.alpine }} \
+            -t ${{ env.DOCKERHUB_REPO }}:alpine-3_glibc-${{ matrix.glibc }} \
+            -t ${{ env.DOCKERHUB_REPO }}:alpine-${{ matrix.alpine }}_glibc-${{ matrix.glibc }} \
             $(printf '${{ env.DOCKERHUB_REPO }}@sha256:%s ' *)
 
       - name: Inspect image
