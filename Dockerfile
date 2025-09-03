@@ -7,7 +7,9 @@
 # Whenever you upgrade Alpine version, make sure to update it in the stage #3 and the .github/workflows
 
 # Stage 1: use docker-glibc-builder build glibc.tar.gz
-FROM ubuntu:22.04 AS builder
+ARG ALPINE_VERSION=3.22
+ARG ALPINE_PACKAGER=3.20
+FROM ubuntu:24.04 AS builder
 LABEL maintainer="Sasha Gerrand <github+docker-glibc-builder@sgerrand.com>"
 RUN apt-get -q update \
     && apt-get -qy install \
@@ -21,14 +23,14 @@ RUN apt-get -q update \
     wget
 COPY configparams /glibc-build/configparams
 COPY builder /builder
-ARG GLIBC_VERSION=2.41
+ARG GLIBC_VERSION=2.42
 RUN env PREFIX_DIR=/usr/glibc-compat /builder
 
 
 # Stage 2: use docker-alpine-abuild package apk and keys
 # NOTE: Alpine 3.20 image is used for packaging since the build script fails for unknown reason on the newer Alpine versions.
 #       The building Alpine version does not affect the use of the package in a newer Alpine version, so we are good for now.
-FROM alpine:3.20 AS packager
+FROM alpine:$ALPINE_PACKAGER AS packager
 RUN apk --no-cache add alpine-sdk coreutils cmake sudo \
     && adduser -G abuild -g "Alpine Package Builder" -s /bin/ash -D builder \
     && echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
@@ -36,14 +38,14 @@ RUN apk --no-cache add alpine-sdk coreutils cmake sudo \
     && chown builder:abuild /packages
 COPY ./abuilder /bin/
 USER builder
-ENV PACKAGER="glibc@gliderlabs.com" 
+ENV PACKAGER="glibc@gliderlabs.com"
 RUN abuild-keygen -na && sudo cp /home/builder/.abuild/${PACKAGER}-*.rsa.pub /etc/apk/keys/
 
 WORKDIR /home/builder/package
 COPY --from=builder /glibc-bin.tar.gz ./
 COPY ./APKBUILD ./abuilder ./glibc-bin.trigger ./ld.so.conf ./
 
-ARG GLIBC_VERSION=2.41
+ARG GLIBC_VERSION
 ARG TARGETARCH
 RUN case "$TARGETARCH" in \
     amd64)   export TARGET_ARCH="x86_64" ;; \
@@ -57,9 +59,9 @@ RUN case "$TARGETARCH" in \
     mv /packages/builder/${TARGET_ARCH}/*.apk /tmp/
 
 
-# Stage 3: apk add apk, build alpine-glibc 
-FROM alpine:3.21
-ARG GLIBC_VERSION=2.41
+# Stage 3: apk add apk, build alpine-glibc
+FROM alpine:$ALPINE_VERSION
+ARG GLIBC_VERSION
 ARG TARGETARCH
 RUN --mount=from=packager,src=/tmp/,dst=/tmp/ \
     --mount=from=packager,src=/etc/apk/keys,dst=/etc/apk/keys/ \

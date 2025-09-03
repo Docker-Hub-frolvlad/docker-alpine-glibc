@@ -1,7 +1,7 @@
 # Maintainer: Sasha Gerrand <alpine-pkgs@sgerrand.com>
 
 pkgname="glibc"
-pkgver="2.41"
+pkgver="2.42"
 pkgrel="1"
 pkgdesc="GNU C Library compatibility layer"
 arch="aarch64"
@@ -29,14 +29,14 @@ package() {
   # set up symbolic links based on architecture
   case "$arch" in
   x86_64)
-    ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 "$pkgdir"/lib/ld-linux-x86-64.so.2
-    ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 "$pkgdir"/lib64/ld-linux-x86-64.so.2
-    ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 "$pkgdir"/usr/glibc-compat/lib64/ld-linux-x86-64.so.2
+    ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 "$pkgdir"/lib/
+    ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 "$pkgdir"/lib64/
+    ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 "$pkgdir"/usr/glibc-compat/lib64/
     ;;
   aarch64)
-    ln -s /usr/glibc-compat/lib/ld-linux-aarch64.so.1 "$pkgdir"/lib/ld-linux-aarch64.so.1
-    ln -s /usr/glibc-compat/lib/ld-linux-aarch64.so.1 "$pkgdir"/lib64/ld-linux-aarch64.so.1
-    ln -s /usr/glibc-compat/lib/ld-linux-aarch64.so.1 "$pkgdir"/usr/glibc-compat/lib64/ld-linux-aarch64.so.1
+    ln -s /usr/glibc-compat/lib/ld-linux-aarch64.so.1 "$pkgdir"/lib/
+    ln -s /usr/glibc-compat/lib/ld-linux-aarch64.so.1 "$pkgdir"/lib64/
+    ln -s /usr/glibc-compat/lib/ld-linux-aarch64.so.1 "$pkgdir"/usr/glibc-compat/lib64/
     ;;
   *)
     echo "not support: $arch"
