@@ -9,6 +9,7 @@
 # Stage 1: use docker-glibc-builder build glibc.tar.gz
 ARG ALPINE_VERSION=3.22
 ARG ALPINE_PACKAGER=3.20
+ARG GLIBC_VERSION=2.42
 FROM ubuntu:24.04 AS builder
 LABEL maintainer="Sasha Gerrand <github+docker-glibc-builder@sgerrand.com>"
 RUN apt-get -q update \
@@ -23,7 +24,7 @@ RUN apt-get -q update \
     wget
 COPY configparams /glibc-build/configparams
 COPY builder /builder
-ARG GLIBC_VERSION=2.42
+ARG GLIBC_VERSION
 RUN env PREFIX_DIR=/usr/glibc-compat /builder
 
 
