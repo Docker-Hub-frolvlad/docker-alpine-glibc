@@ -10,7 +10,7 @@
 ARG ALPINE_VERSION=3.22
 ARG ALPINE_PACKAGER=3.20
 ARG GLIBC_VERSION=2.42
-FROM ubuntu:24.04 AS builder
+FROM ubuntu:26.04 AS builder
 LABEL maintainer="Sasha Gerrand <github+docker-glibc-builder@sgerrand.com>"
 RUN apt-get -q update \
     && apt-get -qy install \
